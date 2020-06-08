@@ -1,11 +1,17 @@
 import React from 'react';
 
 const Btn = (props) => {
+
+  const selectBtn = (e) => {
+    const name = e.target.name
+    props.filter(name)
+  }
+
   return(
   <div style={{marginTop: '10px'}}>
-  <button>All</button>
-  <button style={{marginLeft:'15px'}}>Active</button>
-  <button style={{marginLeft:'15px'}}>Complete</button>
+  <button onClick={selectBtn} name='all'>All</button>
+  <button style={{marginLeft:'15px'}} onClick={selectBtn}name='active'>Active</button>
+  <button style={{marginLeft:'15px'}} onClick={selectBtn}name='complete'>Complete</button>
   </div>
   )
 }

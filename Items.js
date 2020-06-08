@@ -2,13 +2,6 @@ import React from 'react'
 import Item from './Item'
 
 const Items = (props) => {
-
-  // let list = props.items
-  // console.log(list)
-  // return (
-  //   list.map(item => (
-  //   <li>{item.name}</li>
-  // )))
   
   let itemList = props.items.map(item => (
     <div key={item.id}><Item 
@@ -24,7 +17,7 @@ const Items = (props) => {
     return (<p>No items added</p>)
     else
   return (
-    <div>{itemList}
+    <div>{itemList}<br/>
     </div>)
     
 }

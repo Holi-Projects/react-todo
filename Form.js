@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import Items from './Items'
 import Btn from './button'
 
+
 function Form(props) {
 
   const [list, setList] = React.useState(props.tasks)
   const [name, setName] = React.useState('')
-  //const [txdeco, setDeco] = React.useState('none')
+  const [search, setSearch] = React.useState(null)
+  const [btn, setBtn] = React.useState(false)
 
   const setItem = (e) => {
     setName(e.target.value)
@@ -46,9 +48,29 @@ function Form(props) {
       return item
     })
     setList(arr)
+  } 
+
+  const filterItem = (i) => {
+    if(i !== null){
+      setSearch(i)
+      setBtn(true)
+      console.log("value is: "+i)
+    }
   }
 
   const remain = `Number of Items: ${list.length}`
+  const filterList = []
+  list.forEach( item =>{
+      if(search === 'active' && item.txdeco === 'none'){
+        filterList.push(item)
+      }
+      else if(search === 'complete' && item.txdeco === 'line-through'){
+        filterList.push(item)
+      }
+      else if(search === 'all'){
+        filterList.push(item)
+      }
+    })
 
      return(
        <div>
@@ -59,12 +81,13 @@ function Form(props) {
           onChange={setItem}/>
           <button>Add Item</button> 
         </form>
-        <Btn />
+        <Btn filter={filterItem}/>
         <br></br>
         <div>
           {remain}<br></br>
          <Items 
-         items={list} 
+         filter={filterItem}
+         items={btn?filterList:list} 
          checkItem={checkItem}
          editItem={editItem}
          deleteItem={deleteItem}/>
