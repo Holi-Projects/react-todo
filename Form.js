@@ -9,19 +9,24 @@ function Form(props) {
   const [name, setName] = React.useState('')
   const [search, setSearch] = React.useState(null)
   const [btn, setBtn] = React.useState(false)
+  const [error,setError] = React.useState(false)
 
   const setItem = (e) => {
+    if(e.target.value)
+    setError(false)
     setName(e.target.value)
     
   }
 
   const formSubmit = (e) => {
     if(name !== ''){
-   e.preventDefault();
    const itemID = (Math.random()*100).toFixed()
    const newItem = {id: itemID,name: name, txdeco: 'none'}
    setList([...list, newItem])
-   setName('') }
+   setName('') }else{
+     setError(true)
+   }
+   e.preventDefault();
   }
    
   const editItem = (index) => {
@@ -54,10 +59,11 @@ function Form(props) {
     if(i !== null){
       setSearch(i)
       setBtn(true)
-      console.log("value is: "+i)
+      //console.log("value is: "+i)
     }
   }
 
+  const errorMsg = error?'Plz Enter an Item':null
   const remain = `Number of Items: ${list.length}`
   const filterList = []
   list.forEach( item =>{
@@ -74,6 +80,7 @@ function Form(props) {
 
      return(
        <div>
+       <span style={{color:'red'}}>{errorMsg}</span>
         <form onSubmit={formSubmit}>
           <input type='text' 
           placeholder='Enter Item'
